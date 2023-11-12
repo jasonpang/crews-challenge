@@ -1,0 +1,6 @@
+.projectSelectorContainer {
+  width: 20ch;
+  display: flex;
+  gap: 0.5em;
+  align-items: baseline;
+}
