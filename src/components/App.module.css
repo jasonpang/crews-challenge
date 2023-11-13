@@ -1,8 +1,13 @@
-/* .mainContainer {
+.appContainer {
   display: grid;
-  grid-template-rows: [top-gutter] 1em [controls-header] auto [divider] 1em [project-details] auto [bottom-gutter] 1em;
-  grid-template-columns: [left-gutter] 1em [main-content] 1fr [right-gutter] 1em;
+  grid-template-rows: [top-gutter] 1rem [controls-header] auto [divider] 1rem [project-details] auto [bottom-gutter] 1rem;
+  grid-template-columns: [left-gutter] 1rem [main-content] 1fr [right-gutter] 1rem;
   margin: 2rem 4rem;
+  background-color: var(--mantine-color-body);
+  max-width: 800px;
+  border: 1px solid gray;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .headerContainer {
@@ -10,7 +15,7 @@
   grid-row: controls-header;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 0.5rem;
 }
 
 .projectDetailsContainer {
@@ -21,4 +26,4 @@
 .statsContainer {
   grid-row: stats;
   grid-column: content;
-} */
+}

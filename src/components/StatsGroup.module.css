@@ -9,10 +9,10 @@
     var(--mantine-color-blue-4) 0%,
     var(--mantine-color-blue-7) 100%
   );
-  padding: calc(var(--mantine-spacing-xl) * 1.5);
+  padding: calc(var(--mantine-spacing-md) * 1.5);
   border-radius: var(--mantine-radius-md);
 
-  @media (max-width: 48em) {
+  @media (max-width: 55em) {
     flex-direction: column;
   }
 }
@@ -29,8 +29,8 @@
   font-size: 2rem;
   line-height: 1;
   font-weight: 700;
-  margin-bottom: var(--mantine-spacing-md);
-  font-family: Greycliff CF, var(--mantine-font-family);
+  margin-bottom: var(--mantine-spacing-sm);
+  font-family: var(--mantine-font-family);
 }
 
 .description {
@@ -43,16 +43,16 @@
   flex: 1;
 
   & + & {
-    padding-left: var(--mantine-spacing-xl);
-    margin-left: var(--mantine-spacing-xl);
+    padding-left: var(--mantine-spacing-lg);
+    margin-left: var(--mantine-spacing-lg);
     border-left: 1px solid var(--mantine-color-blue-3);
 
-    @media (max-width: 48em) {
+    @media (max-width: 55em) {
       padding-left: 0;
       margin-left: 0;
       border-left: 0;
-      padding-top: var(--mantine-spacing-xl);
-      margin-top: var(--mantine-spacing-xl);
+      padding-top: var(--mantine-spacing-lg);
+      margin-top: var(--mantine-spacing-lg);
       border-top: 1px solid var(--mantine-color-blue-3);
     }
   }

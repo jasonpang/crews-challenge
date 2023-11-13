@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useStore } from "../store";
+import { useStore } from "../lib/store";
 import {
   useProjectDependenciesQuery,
   useProjectStatisticsQuery,

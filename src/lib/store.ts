@@ -1,26 +1,16 @@
 import { create as createZustandStore } from "zustand";
 import { create as produce, Draft } from "mutative";
-import { DependenciesData, Id, ProjectsData, TasksData } from "./types";
+import { Id } from "../types";
 
 interface AppState {
   ui: {
     activeProjectId?: Id;
-  };
-  data: {
-    projects: ProjectsData;
-    tasks: TasksData;
-    dependencies: DependenciesData;
   };
 }
 
 export const useStore = createZustandStore<AppState>(() => ({
   ui: {
     activeProjectId: undefined,
-  },
-  data: {
-    projects: [],
-    tasks: {},
-    dependencies: {},
   },
 }));
 

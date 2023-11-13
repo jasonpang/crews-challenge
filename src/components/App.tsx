@@ -1,20 +1,11 @@
-import { Box, Divider, Paper, Title } from "@mantine/core";
+import { Title } from "@mantine/core";
 import styles from "./App.module.css";
 import ProjectSelector from "./ProjectSelector";
-import { StatsGroup } from "./StatsGroup";
 import ProjectDetails from "./ProjectDetails";
-import { useEffect } from "react";
-import { updateStore } from "../store";
+import { useStore } from "../lib/store";
 import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
-import AppLayout from "./AppLayout";
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,20 +19,28 @@ const queryClient = new QueryClient({
        * This prevents useQuery() usages across components from re-fetching data.
        * This challenge problem's data is unchanging, so we're asking useQuery() to never refetch.
        */
-      // staleTime: Infinity,
+      staleTime: Infinity,
     },
   },
 });
 
 function App() {
+  const activeProjectId = useStore((store) => store.ui.activeProjectId);
+
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={createTheme({})}>
-        <AppLayout
-          Title={<Title order={3}>Crews by Core Challenge</Title>}
-          ProjectSelector={<ProjectSelector />}
-          ProjectDetails={<ProjectDetails />}
-        />
+        <main className={styles.appContainer}>
+          <header className={styles.headerContainer}>
+            <Title order={3}>Crews by Core Challenge</Title>
+            <ProjectSelector />
+          </header>
+          {activeProjectId && (
+            <section className={styles.projectDetailsContainer}>
+              <ProjectDetails />
+            </section>
+          )}
+        </main>
       </MantineProvider>
     </QueryClientProvider>
   );

@@ -9,13 +9,11 @@ import {
 export const useProjectsQuery = () =>
   useQuery<ProjectsData>({
     queryKey: ["projects"],
-    staleTime: Infinity,
   });
 
 export const useProjectTasksQuery = ({ projectId }: { projectId: string }) =>
   useQuery<TaskInfo[]>({
     queryKey: ["projects", projectId, "tasks"],
-    staleTime: Infinity,
   });
 
 export const useProjectDependenciesQuery = ({
@@ -25,7 +23,6 @@ export const useProjectDependenciesQuery = ({
 }) =>
   useQuery<DependencyInfo[]>({
     queryKey: ["projects", projectId, "dependencies"],
-    staleTime: Infinity,
   });
 
 export const useProjectStatisticsQuery = ({
@@ -35,5 +32,4 @@ export const useProjectStatisticsQuery = ({
 }) =>
   useQuery<ProjectStatistics>({
     queryKey: ["projects", projectId, "statistics"],
-    staleTime: Infinity,
   });

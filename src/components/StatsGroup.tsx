@@ -1,4 +1,3 @@
-import { Text } from "@mantine/core";
 import classes from "./StatsGroup.module.css";
 
 /*
@@ -20,9 +19,9 @@ export type StatsGroupProps = {
 export function StatsGroup({ data }: StatsGroupProps) {
   const stats = data.map((stat) => (
     <div key={stat.title} className={classes.stat}>
-      <Text className={classes.count}>{stat.stats}</Text>
-      <Text className={classes.title}>{stat.title}</Text>
-      <Text className={classes.description}>{stat.description}</Text>
+      <div className={classes.count}>{stat.stats}</div>
+      <div className={classes.title}>{stat.title}</div>
+      <div className={classes.description}>{stat.description}</div>
     </div>
   ));
   return <div className={classes.root}>{stats}</div>;

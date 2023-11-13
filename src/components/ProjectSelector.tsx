@@ -1,17 +1,8 @@
 import styles from "./ProjectSelector.module.css";
-import { useCallback, useMemo, useState } from "react";
-import {
-  Combobox,
-  InputBase,
-  Input,
-  Loader,
-  useCombobox,
-  InputLabel,
-} from "@mantine/core";
-import { ProjectsData } from "../types";
-import { updateStore, useStore } from "../store";
+import { useCallback, useMemo } from "react";
+import { Combobox, InputBase, Input, Loader, useCombobox } from "@mantine/core";
+import { updateStore, useStore } from "../lib/store";
 import { useProjectsQuery } from "../hooks/useQueries";
-import { useActiveProject } from "../hooks/storeHelpers";
 
 export default function ProjectSelector() {
   const { data: projects, isFetched } = useProjectsQuery();

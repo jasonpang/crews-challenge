@@ -1,24 +1,12 @@
 import styles from "./ProjectDetails.module.css";
-import {
-  Combobox,
-  InputBase,
-  Input,
-  Loader,
-  useCombobox,
-  InputLabel,
-  Text,
-  Flex,
-} from "@mantine/core";
-import { ProjectsData } from "../types";
+import { Loader, Text, Flex } from "@mantine/core";
 import { StatsGroup } from "./StatsGroup";
 import { useActiveProject } from "../hooks/storeHelpers";
-import { useProjectTasksQuery } from "../hooks/useQueries";
 import { GraphCanvas } from "reagraph";
 import { useMemo } from "react";
 
 export default function ProjectDetails() {
-  const { project, tasks, dependencies, statistics, isFetched } =
-    useActiveProject();
+  const { tasks, dependencies, statistics, isFetched } = useActiveProject();
 
   const graphNodes = useMemo(() => {
     return tasks?.map((task) => ({ id: task.id, label: task.name }));
@@ -72,6 +60,7 @@ export default function ProjectDetails() {
         ]}
       />
       <div style={{ position: "relative", width: "100%", height: "400px" }}>
+        {/* reagraph will style itself as position: absolute with 100% width and height, so a relative parent container is required */}
         <GraphCanvas animated={false} nodes={graphNodes!} edges={graphEdges!} />
       </div>
     </section>
