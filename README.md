@@ -1,5 +1,7 @@
 ## Challenge Submission Notes
 
+![Submission screenshot](./screenshot.webp)
+
 Steps to run:
 
 - Clone the repo
@@ -8,8 +10,6 @@ Steps to run:
 - Navigate to `localhost:3000`
 
 Here are some notes for the requirements:
-
-![Submission screenshot](./screenshot.webp)
 
 - General
   - Using TypeScript
