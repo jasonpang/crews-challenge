@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
 import styles from "./ProjectSelector.module.css";
+import { useCallback, useMemo, useState } from "react";
 import {
   Combobox,
   InputBase,
@@ -10,42 +10,50 @@ import {
 } from "@mantine/core";
 import { ProjectsData } from "../types";
 import { updateStore, useStore } from "../store";
+import { useProjectsQuery } from "../hooks/useQueries";
+import { useActiveProject } from "../hooks/storeHelpers";
 
 export default function ProjectSelector() {
+  const { data: projects, isFetched } = useProjectsQuery();
   const activeProjectId = useStore((store) => store.ui.activeProjectId);
-  const projects = useStore((store) => store.data.projects);
   const activeProject = useMemo(
-    () => projects.find((project) => project.id === activeProjectId),
+    () => projects?.find((project) => project.id === activeProjectId),
     [activeProjectId, projects]
   );
-  const isLoadingData = useMemo(() => !projects.length, [projects]);
-  console.log("projects:", projects);
 
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => {
-      if (isLoadingData) {
+      if (!isFetched) {
         return;
       }
     },
   });
 
-  const options = projects.map((item) => (
-    <Combobox.Option value={item.id} key={item.id}>
-      {item.name}
-    </Combobox.Option>
-  ));
+  const comboboxOptionsRender = useMemo(
+    () =>
+      projects?.map((item) => (
+        <Combobox.Option value={item.id} key={item.id}>
+          {item.name}
+        </Combobox.Option>
+      )),
+    [projects]
+  );
+
+  const onProjectSelected = useCallback(
+    (projectId: string) => {
+      updateStore((store) => (store.ui.activeProjectId = projectId));
+      combobox.closeDropdown();
+    },
+    [combobox]
+  );
 
   return (
-    <section className={styles.projectSelectorContainer}>
-      {/* <InputLabel>Project:</InputLabel> */}
+    <div className={styles.projectSelectorContainer}>
       <Combobox
         store={combobox}
         withinPortal={false}
-        onOptionSubmit={(projectId) => {
-          updateStore((store) => (store.ui.activeProjectId = projectId));
-          combobox.closeDropdown();
-        }}
+        onOptionSubmit={onProjectSelected}
       >
         <Combobox.Target>
           <InputBase
@@ -53,7 +61,7 @@ export default function ProjectSelector() {
             type="button"
             pointer
             rightSection={
-              isLoadingData ? <Loader size={18} /> : <Combobox.Chevron />
+              !isFetched ? <Loader size={18} /> : <Combobox.Chevron />
             }
             onClick={() => combobox.toggleDropdown()}
             rightSectionPointerEvents="none"
@@ -63,22 +71,18 @@ export default function ProjectSelector() {
           >
             {activeProject?.name || (
               <Input.Placeholder>
-                {isLoadingData ? "Loading projects..." : "Select a project"}
+                {!isFetched ? "Loading projects..." : "Select a project"}
               </Input.Placeholder>
             )}
           </InputBase>
         </Combobox.Target>
 
-        <Combobox.Dropdown>
-          <Combobox.Options>
-            {isLoadingData ? (
-              <Combobox.Empty>Loading projects....</Combobox.Empty>
-            ) : (
-              options
-            )}
-          </Combobox.Options>
-        </Combobox.Dropdown>
+        {isFetched && (
+          <Combobox.Dropdown>
+            <Combobox.Options>{comboboxOptionsRender}</Combobox.Options>
+          </Combobox.Dropdown>
+        )}
       </Combobox>
-    </section>
+    </div>
   );
 }

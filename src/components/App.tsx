@@ -5,33 +5,45 @@ import { StatsGroup } from "./StatsGroup";
 import ProjectDetails from "./ProjectDetails";
 import { useEffect } from "react";
 import { updateStore } from "../store";
+import { MantineProvider, createTheme } from "@mantine/core";
+import "@mantine/core/styles.css";
+import AppLayout from "./AppLayout";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // A default query function: https://tanstack.com/query/latest/docs/react/guides/default-query-function
+      queryFn: async ({ queryKey }) => {
+        const response = await fetch(`/api/${queryKey.join("/")}`);
+        return await response.json();
+      },
+      /**
+       * This prevents useQuery() usages across components from re-fetching data.
+       * This challenge problem's data is unchanging, so we're asking useQuery() to never refetch.
+       */
+      // staleTime: Infinity,
+    },
+  },
+});
 
 function App() {
-  useEffect(() => {
-    async function loadData() {
-      const response = await fetch("api/projects");
-      const data = await response.json();
-      updateStore((store) => (store.data.projects = data));
-    }
-
-    loadData();
-  }, []);
-
   return (
-    <Paper
-      component="main"
-      shadow="md"
-      withBorder
-      className={styles.mainContainer}
-    >
-      <header className={styles.headerContainer}>
-        <Title order={3}>Crews by Core Challenge</Title>
-        <ProjectSelector />
-      </header>
-      <section className={styles.projectDetailsContainer}>
-        <ProjectDetails />
-      </section>
-    </Paper>
+    <QueryClientProvider client={queryClient}>
+      <MantineProvider theme={createTheme({})}>
+        <AppLayout
+          Title={<Title order={3}>Crews by Core Challenge</Title>}
+          ProjectSelector={<ProjectSelector />}
+          ProjectDetails={<ProjectDetails />}
+        />
+      </MantineProvider>
+    </QueryClientProvider>
   );
 }
 

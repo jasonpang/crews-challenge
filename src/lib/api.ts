@@ -1,9 +1,10 @@
 import { Response, Server } from "miragejs";
 
-import projects from "./data/projects";
-import tasks from "./data/tasks";
-import dependenciesData from "./data/dependencies";
-import { DependenciesData, TasksData } from "./types";
+import projects from "../data/projects";
+import tasks from "../data/tasks";
+import dependenciesData from "../data/dependencies";
+import { DependenciesData, TasksData } from "../types";
+import { getComputedProjectStatistics } from "./compute";
 
 new Server({
   routes() {
@@ -14,7 +15,7 @@ new Server({
       () => {
         return projects;
       },
-      { timing: 1000 }
+      { timing: 250 }
     );
 
     this.get(
@@ -26,7 +27,7 @@ new Server({
           }) || []
         );
       },
-      { timing: 2000 }
+      { timing: 500 }
     );
 
     this.get(
@@ -42,7 +43,15 @@ new Server({
 
         return dependenciesDataEntry;
       },
-      { timing: 2000 }
+      { timing: 500 }
+    );
+
+    this.get(
+      "/projects/:projectid/statistics",
+      (schema, { params }) => {
+        return getComputedProjectStatistics({ projectId: params.projectid });
+      },
+      { timing: 0 }
     );
   },
 });

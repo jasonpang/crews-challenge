@@ -17,6 +17,13 @@ export type DependencyInfo = {
   successor_id: Id;
 };
 
+export type ProjectStatistics = {
+  allTasksCount: number;
+  dependenciesCount: number;
+  rootTasksCount: number;
+  longestDependenciesChainCount: number;
+};
+
 export type ProjectsData = ProjectInfo[];
 export type TasksData = Record<Id, TaskInfo[]>;
 export type DependenciesData = Record<Id, DependencyInfo[]>;
