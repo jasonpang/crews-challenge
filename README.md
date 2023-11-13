@@ -1,5 +1,12 @@
 ## Challenge Submission Notes
 
+Steps to run:
+
+- Clone the repo
+- Run `yarn` to install dependencies
+- Run `yarn start`
+- Navigate to `localhost:3000`
+
 Here are some notes for the requirements:
 
 ![Submission screenshot](./screenshot.webp)
