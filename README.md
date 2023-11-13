@@ -2,6 +2,8 @@
 
 Here are some notes for the requirements:
 
+![Submission screenshot](./screenshot.webp)
+
 - General
   - Using TypeScript
     - I changed the project from JavaScript to TypeScript
