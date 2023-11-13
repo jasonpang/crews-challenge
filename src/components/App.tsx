@@ -3,8 +3,20 @@ import styles from "./App.module.css";
 import ProjectSelector from "./ProjectSelector";
 import { StatsGroup } from "./StatsGroup";
 import ProjectDetails from "./ProjectDetails";
+import { useEffect } from "react";
+import { updateStore } from "../store";
 
 function App() {
+  useEffect(() => {
+    async function loadData() {
+      const response = await fetch("api/projects");
+      const data = await response.json();
+      updateStore((store) => (store.data.projects = data));
+    }
+
+    loadData();
+  }, []);
+
   return (
     <Paper
       component="main"
